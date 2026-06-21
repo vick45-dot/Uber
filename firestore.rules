@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+    function userRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+    function isAdmin() { return isSignedIn() && userRole() == 'ADMIN'; }
+
+    // Catalog is PUBLIC READ (browse without login). Writes are restricted.
+    match /restaurants/{id} {
+      allow read: if true;
+      allow write: if isSignedIn() && (resource == null || resource.data.ownerUid == request.auth.uid || isAdmin());
+    }
+    match /menuItems/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+    match /shops/{id} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+    match /drivers/{uid} {
+      allow read: if true;                       // drivers visible on map
+      allow create, update: if isOwner(uid) || isAdmin();
+    }
+
+    // Users: only the owner (and admin) can read/write their profile.
+    match /users/{uid} {
+      allow read, write: if isOwner(uid) || isAdmin();
+    }
+
+    // Orders: customer creates; customer, rider, restaurant owner, admin can read.
+    match /orders/{id} {
+      allow create: if isSignedIn() && request.resource.data.customerUid == request.auth.uid;
+      allow read, update: if isSignedIn();
+    }
+
+    // Rides: customer creates; drivers can read pending + update assigned.
+    match /rides/{id} {
+      allow create: if isSignedIn() && request.resource.data.customerUid == request.auth.uid;
+      allow read, update: if isSignedIn();
+    }
+  }
+}

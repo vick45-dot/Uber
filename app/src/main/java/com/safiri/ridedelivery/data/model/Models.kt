@@ -10,7 +10,17 @@ enum class VehicleType { CAR, TAXI, MOTORCYCLE, BODA_BODA }
 enum class OrderStatus { PENDING, ACCEPTED, PREPARING, PICKED_UP, ON_THE_WAY, DELIVERED, CANCELLED }
 enum class RideStatus { REQUESTED, ACCEPTED, ARRIVING, IN_PROGRESS, COMPLETED, CANCELLED }
 enum class ApprovalStatus { PENDING, APPROVED, REJECTED }
-enum class PaymentMethod { MPESA, CARD, CASH }
+enum class PaymentMethod {
+    MPESA,
+    AIRTEL_MONEY,
+    T_KASH,
+    CARD,
+    CASH,
+    PAYPAL,
+    GOOGLE_PAY,
+    APPLE_PAY,
+    CRYPTO
+}
 
 data class GeoPoint(
     val lat: Double = 0.0,

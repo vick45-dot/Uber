@@ -21,11 +21,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.safiri.ridedelivery.data.model.GeoPoint
 import com.safiri.ridedelivery.data.model.Restaurant
 import com.safiri.ridedelivery.navigation.Routes
 import com.safiri.ridedelivery.ui.components.*
 import com.safiri.ridedelivery.ui.theme.BrandGreen
 import com.safiri.ridedelivery.ui.theme.BrandGreenDark
+import com.safiri.ridedelivery.util.FareCalculator
 import com.safiri.ridedelivery.util.VehicleInfo
 import com.safiri.ridedelivery.viewmodel.AuthViewModel
 import com.safiri.ridedelivery.viewmodel.CartViewModel
@@ -120,13 +122,35 @@ fun HomeScreen(
                 ) {
                     items(drivers) { d ->
                         val meta = VehicleInfo.of(d.vehicleType)
+                        val ref = selectedAddress ?: GeoPoint(-0.3031, 36.0800)
+                        val dist = FareCalculator.distanceKm(ref, d.currentLocation)
+                        val distText = if (dist < 1.0) "${(dist * 1000).toInt()} m" else "${"%.1f".format(dist)} km"
+
                         Card(
                             Modifier.width(150.dp),
                             shape = RoundedCornerShape(16.dp),
                             elevation = CardDefaults.cardElevation(2.dp)
                         ) {
                             Column(Modifier.padding(14.dp)) {
-                                Text(meta.emoji, fontSize = 30.sp)
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(meta.emoji, fontSize = 30.sp)
+                                    Surface(
+                                        color = BrandGreen.copy(alpha = 0.1f),
+                                        shape = RoundedCornerShape(8.dp)
+                                    ) {
+                                        Text(
+                                            distText,
+                                            fontSize = 10.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            color = BrandGreen,
+                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                        )
+                                    }
+                                }
                                 Spacer(Modifier.height(6.dp))
                                 Text(meta.label, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                                 Text(d.vehicleModel, fontSize = 12.sp,

@@ -6,7 +6,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import android.content.Intent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -19,6 +22,20 @@ import com.safiri.ridedelivery.viewmodel.AuthViewModel
 @Composable
 fun ProfileScreen(navController: NavController, authVm: AuthViewModel) {
     val user by authVm.user.collectAsState()
+    val context = LocalContext.current
+
+    val shareAppLambda = {
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "Hey! Check out Ride & Delivery app. Book rides and order food easily in Kenya! Download it here: https://github.com/vick45-dot/Uber"
+            )
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, "Share Ride & Delivery App via")
+        context.startActivity(shareIntent)
+    }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Profile") }) },
@@ -53,11 +70,33 @@ fun ProfileScreen(navController: NavController, authVm: AuthViewModel) {
                     UserRole.ADMIN -> DashButton("Admin dashboard") { navController.navigate(Routes.ADMIN_DASH) }
                     UserRole.CUSTOMER -> {}
                 }
+            }
+
+            Spacer(Modifier.height(8.dp))
+            HorizontalDivider()
+            Spacer(Modifier.height(8.dp))
+
+            // App Share Options
+            Text("App Settings", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+            
+            OutlinedButton(
+                onClick = shareAppLambda,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary)
+            ) {
+                Icon(Icons.Rounded.Share, null)
+                Spacer(Modifier.width(8.dp))
+                Text("Share App with Friends")
+            }
+
+            if (user != null) {
                 Spacer(Modifier.weight(1f))
                 OutlinedButton(
                     onClick = { authVm.logout() },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                 ) {
                     Icon(Icons.Rounded.Logout, null)
                     Spacer(Modifier.width(8.dp))

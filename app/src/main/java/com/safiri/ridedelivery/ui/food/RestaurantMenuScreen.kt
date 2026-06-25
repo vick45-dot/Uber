@@ -6,9 +6,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -53,7 +53,7 @@ fun RestaurantMenuScreen(
                 title = { Text(restaurant?.name ?: "Menu") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back")
                     }
                 }
             )
@@ -66,7 +66,8 @@ fun RestaurantMenuScreen(
                         else showLogin = true
                     },
                     containerColor = BrandGreen,
-                    icon = { Icon(Icons.Default.ShoppingCart, null) },
+                    shape = RoundedCornerShape(16.dp),
+                    icon = { Icon(Icons.Rounded.ShoppingCart, null) },
                     text = { Text("View cart • ${cart.sumOf { it.quantity }}") }
                 )
             }
@@ -116,8 +117,9 @@ fun RestaurantMenuScreen(
                         }
                         FilledIconButton(
                             onClick = { cartVm.add(item) },
+                            shape = RoundedCornerShape(12.dp),
                             colors = IconButtonDefaults.filledIconButtonColors(containerColor = BrandGreen)
-                        ) { Icon(Icons.Default.Add, "Add ${item.name}") }
+                        ) { Icon(Icons.Rounded.Add, "Add ${item.name}") }
                     }
                     Divider(color = MaterialTheme.colorScheme.surfaceVariant)
                 }

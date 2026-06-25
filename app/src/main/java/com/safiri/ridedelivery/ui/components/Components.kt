@@ -8,7 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -30,11 +30,11 @@ import com.safiri.ridedelivery.ui.theme.BrandGreenDark
 data class BottomItem(val route: String, val label: String, val icon: ImageVector)
 
 private val bottomItems = listOf(
-    BottomItem(Routes.HOME, "Home", Icons.Default.Home),
-    BottomItem(Routes.FOOD, "Food", Icons.Default.Restaurant),
-    BottomItem(Routes.RIDE, "Ride", Icons.Default.DirectionsCar),
-    BottomItem(Routes.SEARCH, "Search", Icons.Default.Search),
-    BottomItem(Routes.PROFILE, "Profile", Icons.Default.Person)
+    BottomItem(Routes.HOME, "Home", Icons.Rounded.Home),
+    BottomItem(Routes.FOOD, "Food", Icons.Rounded.Restaurant),
+    BottomItem(Routes.RIDE, "Ride", Icons.Rounded.DirectionsCar),
+    BottomItem(Routes.SEARCH, "Search", Icons.Rounded.Search),
+    BottomItem(Routes.PROFILE, "Profile", Icons.Rounded.Person)
 )
 
 @Composable
@@ -127,7 +127,7 @@ fun LoginRequiredDialog(onLogin: () -> Unit, onDismiss: () -> Unit) {
         onDismissRequest = onDismiss,
         confirmButton = { Button(onClick = onLogin) { Text("Log in / Sign up") } },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Keep browsing") } },
-        icon = { Icon(Icons.Default.Lock, null, tint = BrandGreen) },
+        icon = { Icon(Icons.Rounded.Lock, null, tint = BrandGreen) },
         title = { Text("Login required") },
         text = { Text("Please log in to continue. You can keep browsing freely without an account.") }
     )
@@ -159,7 +159,7 @@ fun RatingChip(rating: Double, eta: Int) {
             Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(Icons.Default.Star, null, tint = Color(0xFFFFB300), modifier = Modifier.size(14.dp))
+            Icon(Icons.Rounded.Star, null, tint = Color(0xFFFFB300), modifier = Modifier.size(14.dp))
             Spacer(Modifier.width(4.dp))
             Text("${"%.1f".format(rating)}", fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
             Text(" • $eta min", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)

@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material.icons.rounded.MyLocation
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -63,14 +63,14 @@ fun RideScreen(navController: NavController, rideVm: RideViewModel, authVm: Auth
                         OutlinedTextField(
                             value = pickupText, onValueChange = { pickupText = it },
                             label = { Text("Pickup location") },
-                            leadingIcon = { Icon(Icons.Default.MyLocation, null, tint = BrandGreen) },
+                            leadingIcon = { Icon(Icons.Rounded.MyLocation, null, tint = BrandGreen) },
                             modifier = Modifier.fillMaxWidth(), singleLine = true
                         )
                         Spacer(Modifier.height(8.dp))
                         OutlinedTextField(
                             value = destText, onValueChange = { destText = it },
                             label = { Text("Destination") },
-                            leadingIcon = { Icon(Icons.Default.LocationOn, null, tint = Color(0xFFE8590C)) },
+                            leadingIcon = { Icon(Icons.Rounded.LocationOn, null, tint = Color(0xFFE8590C)) },
                             modifier = Modifier.fillMaxWidth(), singleLine = true
                         )
                     }

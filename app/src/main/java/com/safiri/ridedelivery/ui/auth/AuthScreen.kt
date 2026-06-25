@@ -3,6 +3,9 @@ package com.safiri.ridedelivery.ui.auth
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -42,17 +45,21 @@ fun AuthScreen(navController: NavController, authVm: AuthViewModel) {
         ) {
             if (!isLogin) {
                 OutlinedTextField(name, { name = it }, label = { Text("Full name") },
-                    modifier = Modifier.fillMaxWidth())
+                    leadingIcon = { Icon(Icons.Rounded.Person, null) },
+                    modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp))
                 OutlinedTextField(phone, { phone = it }, label = { Text("Phone (07…)") },
+                    leadingIcon = { Icon(Icons.Rounded.Phone, null) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                    modifier = Modifier.fillMaxWidth())
+                    modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp))
             }
             OutlinedTextField(email, { email = it }, label = { Text("Email") },
+                leadingIcon = { Icon(Icons.Rounded.Email, null) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                modifier = Modifier.fillMaxWidth())
+                modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp))
             OutlinedTextField(password, { password = it }, label = { Text("Password") },
+                leadingIcon = { Icon(Icons.Rounded.Lock, null) },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth())
+                modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp))
 
             if (!isLogin) {
                 Text("Register as:")
@@ -82,7 +89,8 @@ fun AuthScreen(navController: NavController, authVm: AuthViewModel) {
                     } else authVm.register(name, email, phone, password, role, cb)
                 },
                 enabled = !busy && email.isNotBlank() && password.isNotBlank(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp)
             ) { Text(if (isLogin) "Log in" else "Sign up") }
 
             TextButton(onClick = { isLogin = !isLogin }) {

@@ -3,6 +3,9 @@ package com.safiri.ridedelivery.ui.search
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -28,8 +31,10 @@ fun SearchScreen(navController: NavController, catalogVm: CatalogViewModel) {
             OutlinedTextField(
                 value = query,
                 onValueChange = { query = it; catalogVm.search(it) },
+                leadingIcon = { Icon(Icons.Rounded.Search, contentDescription = null) },
                 label = { Text("Food, shops, services…") },
-                modifier = Modifier.fillMaxWidth().padding(16.dp)
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                shape = RoundedCornerShape(12.dp)
             )
             LazyColumn {
                 if (restaurants.isNotEmpty()) item { SectionHeader("Restaurants") }

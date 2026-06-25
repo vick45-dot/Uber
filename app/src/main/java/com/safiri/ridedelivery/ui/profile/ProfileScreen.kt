@@ -1,6 +1,9 @@
 package com.safiri.ridedelivery.ui.profile
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -24,10 +27,18 @@ fun ProfileScreen(navController: NavController, authVm: AuthViewModel) {
         Column(Modifier.padding(pad).padding(16.dp).fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
             if (user == null) {
+                Icon(Icons.Rounded.AccountCircle, null, Modifier.size(80.dp), tint = MaterialTheme.colorScheme.outline)
                 Text("You're browsing as a guest.", fontWeight = FontWeight.SemiBold)
                 Text("Log in to order food, book rides, and save addresses.")
-                Button(onClick = { navController.navigate(Routes.AUTH) },
-                    modifier = Modifier.fillMaxWidth()) { Text("Log in / Sign up") }
+                Button(
+                    onClick = { navController.navigate(Routes.AUTH) },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Icon(Icons.Rounded.Login, null)
+                    Spacer(Modifier.width(8.dp))
+                    Text("Log in / Sign up")
+                }
             } else {
                 val u = user!!
                 Text(u.name, style = MaterialTheme.typography.titleLarge)
@@ -43,7 +54,13 @@ fun ProfileScreen(navController: NavController, authVm: AuthViewModel) {
                     UserRole.CUSTOMER -> {}
                 }
                 Spacer(Modifier.weight(1f))
-                OutlinedButton(onClick = { authVm.logout() }, modifier = Modifier.fillMaxWidth()) {
+                OutlinedButton(
+                    onClick = { authVm.logout() },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Icon(Icons.Rounded.Logout, null)
+                    Spacer(Modifier.width(8.dp))
                     Text("Log out")
                 }
             }
@@ -53,5 +70,13 @@ fun ProfileScreen(navController: NavController, authVm: AuthViewModel) {
 
 @Composable
 private fun DashButton(label: String, onClick: () -> Unit) {
-    Button(onClick = onClick, modifier = Modifier.fillMaxWidth()) { Text(label) }
+    Button(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Icon(Icons.Rounded.Dashboard, null)
+        Spacer(Modifier.width(8.dp))
+        Text(label)
+    }
 }

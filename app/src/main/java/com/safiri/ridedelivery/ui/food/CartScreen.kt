@@ -5,9 +5,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,7 +33,7 @@ fun CartScreen(navController: NavController, cartVm: CartViewModel) {
         topBar = {
             TopAppBar(title = { Text("Your cart") }, navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
+                    Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back")
                 }
             })
         },
@@ -82,15 +82,17 @@ fun CartScreen(navController: NavController, cartVm: CartViewModel) {
                         FilledIconButton(
                             onClick = { cartVm.remove(ci.menuItem.id) },
                             modifier = Modifier.size(32.dp),
+                            shape = RoundedCornerShape(8.dp),
                             colors = IconButtonDefaults.filledIconButtonColors(
                                 containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                        ) { Icon(Icons.Default.Remove, "Remove", tint = MaterialTheme.colorScheme.onSurface) }
+                        ) { Icon(Icons.Rounded.Remove, "Remove", tint = MaterialTheme.colorScheme.onSurface) }
                         Text("  ${ci.quantity}  ", fontWeight = FontWeight.Bold)
                         FilledIconButton(
                             onClick = { cartVm.add(ci.menuItem) },
                             modifier = Modifier.size(32.dp),
+                            shape = RoundedCornerShape(8.dp),
                             colors = IconButtonDefaults.filledIconButtonColors(containerColor = BrandGreen)
-                        ) { Icon(Icons.Default.Add, "Add") }
+                        ) { Icon(Icons.Rounded.Add, "Add") }
                     }
                 }
                 Divider(color = MaterialTheme.colorScheme.surfaceVariant)
